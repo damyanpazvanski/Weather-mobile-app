@@ -1,0 +1,74 @@
+<div ng-cloak style="height: 100vh; width: 100%; position: absolute; overflow-x: hidden; z-index: 1">
+  <div ng-cloak class="menu-changes">
+    <span style="float: right; position: relative; right: 10px; top: 10px; cursor:pointer;" ng-click="closeMenu()"><i class="fa fa-times" aria-hidden="true"></i></span>
+    <div class="text-center" style="margin-top: 20px">
+      <img style="border-radius: 50%; width: 70px ; overflow: hidden; border: 3px solid lightgray; background: white" src="images/favicon.png" alt="logo">
+    </div>
+
+    <ul class="menu-bars">
+      <a href="#/"><div class="form-control">HOME <span style="float: right;"><i class="fa fa-home" aria-hidden="true"></i></span></div></a>
+      <a href="#/forecast"><div style="margin-bottom: 20px; margin-top: 10px" class="form-control">FORECAST <span style="float: right;"><i class="fa fa-calendar" aria-hidden="true"></i>
+</span></div></a>
+      <div>SETTINGS</div>
+      <li>
+        <div class="item">
+          <p>{{ tempMeasureText }}</p>
+          <input type="checkbox" id="toggle-btn-degreese" ng-model="changeTemperatureMeasure" ng-click="changeTemp()">
+          <div class="toggle">
+            <label for="toggle-btn-degreese"><i></i></label>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item">
+          <p>{{ speedMeasureMain }}</p>
+          <input type="checkbox" id="toggle-btn-speed" ng-model="changeSpeedMeasure" ng-click="changeSpeed()">
+          <div class="toggle">
+            <label for="toggle-btn-speed"><i></i></label>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="language-label">Languages:</div>
+        <select ng-change="changeLanguage()" class="form-control" ng-model="selectLanguage">
+          <option value="en" selected="selected">EN</option>
+          <option value="de">DE</option>
+          <option value="bg">БГ</option>
+          <option value="ru">РУ</option>
+          <option value="el">ЕЛ</option>
+        </select>
+      </li>
+
+    </ul>
+
+  </div>
+  <div id="menu-background"></div>
+
+  <div ng-cloak style="position: absolute; width: 100%; background: white" id="home-page-content">
+
+    <div class="nav-container-background" style="min-height: 9vh;">
+      <div class="col-xs-2 col-sm-2 col-md-2" style="padding: 0px">
+        <i class="fa fa-bars" id="menu-icon" style="font-size: 10vw; margin-top: 5px; margin-left: 10px; cursor:pointer;"></i>
+      </div>
+      <div class="text-center col-xs-10 col-sm-10 col-md-10">
+        <h3 style="margin-top: 10px;">FORECAST</h3>
+      </div>
+    </div>
+
+    <div ng-repeat="forecastInfo in forecastInformation" style="width: 100%; font-size: 8px; border-bottom: 1px solid lightgray; padding-bottom: 5px" class="col-xs-12 col-sm-12 col-md-12 text-center">
+      <div class="col-xs-4 col-sm-4 col-md-4 text-center">
+        <h4>{{ forecastInfo.day }}</h4>
+        <img ng-src="images/black-icons/{{ forecastInfo.icon }}.png"  alt="weather" style="width: 30px">
+      </div>
+      <div class="col-xs-8 col-sm-8 col-md-8" style="line-height: 2px; margin-top: 15px">
+        <p>Temperature: max: {{ forecastInfo.highTemp }} {{ tempMeasureText }}</p>
+        <p>Temperature: min: {{forecastInfo.lowTemp}} {{ tempMeasureText }}</p>
+        <p><span>Humidity: </span> <span> Max: {{ forecastInfo.maxHumidity }} % </span> |<span> Min: {{forecastInfo.minHumidity}} %</span></p>
+        <p>Wind: {{ forecastInfo.wind }} {{ speedMeasureMain }}</p>
+        <p>Sunset: {{ forecastInfo.sunset }}</p>
+        <p>Sunrise: {{ forecastInfo.sunrise }}</p>
+      </div>
+    </div>
+
+  </div>
+</div>

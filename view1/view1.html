@@ -1,0 +1,143 @@
+<div ng-cloak style="height: 100vh; width: 100%; position: absolute; overflow-x: hidden; z-index: 1">
+    <div class="menu-changes">
+        <span style="float: right; position: relative; right: 10px; top: 10px; cursor:pointer;" ng-click="closeMenu()"><i class="fa fa-times" aria-hidden="true"></i></span>
+
+        <div class="text-center" style="margin-top: 20px">
+            <img style="border-radius: 50%; width: 70px ; overflow: hidden; border: 3px solid lightgray; background: white" src="images/favicon.png" alt="logo">
+        </div>
+
+        <ul class="menu-bars">
+
+            <a href="#/"><div class="form-control">HOME <span style="float: right;"><i class="fa fa-home" aria-hidden="true"></i></span></div></a>
+            <a href="#/forecast"><div style="margin-bottom: 20px; margin-top: 10px" class="form-control">FORECAST <span style="float: right;"><i class="fa fa-calendar" aria-hidden="true"></i>
+</span></div></a>
+            <div>SETTINGS <span style="float: right;"><i class="fa fa-cog" aria-hidden="true"></i></span></div>
+            <li>
+                <div class="item">
+                    <p>{{ tempMeasureText }}</p>
+                    <input type="checkbox" id="toggle-btn-degreese" ng-model="changeTemperatureMeasure" ng-click="changeTemp()">
+                    <div class="toggle">
+                        <label for="toggle-btn-degreese"><i></i></label>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <p>{{ speedMeasureMain }}</p>
+                    <input type="checkbox" id="toggle-btn-speed" ng-model="changeSpeedMeasure" ng-click="changeSpeed()">
+                    <div class="toggle">
+                        <label for="toggle-btn-speed"><i></i></label>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="language-label">Languages:</div>
+                <select ng-change="changeLanguage()" class="form-control" ng-model="selectLanguage">
+                    <option value="en" selected="selected">EN</option>
+                    <option value="de">DE</option>
+                    <option value="bg">БГ</option>
+                    <option value="ru">РУ</option>
+                    <option value="el">ЕЛ</option>
+                </select>
+            </li>
+        </ul>
+
+    </div>
+    <div id="menu-background"></div>
+
+    <div ng-cloak style="height: 100vh; overflow: hidden; position: absolute; background: white" id="home-page-content">
+
+        <div class="nav-container-background" style="min-height: 9vh;">
+            <div class="col-xs-2 col-sm-2 col-md-2" style="padding: 0px">
+                <i class="fa fa-bars" id="menu-icon" style="font-size: 10vw; margin-top: 5px; margin-left: 10px; cursor:pointer;"></i>
+            </div>
+            <div class="col-xs-7 col-sm-7 col-md-7" style="margin-top: 5px">
+                <input type="text" style="height: 7vh;" ng-change="chooseCity()" ng-model="searchForCity" id="searchByCity" class="form-control">
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3" style="padding: 0px">
+                <i class="fa fa-refresh" style="font-size: 10vw; margin-top: 5px; cursor:pointer;" ng-click="refresh()" aria-hidden="true"></i>
+            </div>
+        </div>
+
+        <div id="wrong-message" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" style="display: none; font-size: 12px; color: gray; line-height: 0.4; position: relative; background: lightgray">
+            <p style="margin: 10px 0px">Here is available problem! Try again.</p>
+        </div>
+
+
+        <div style="height: 47vh;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-background">
+
+            <h2 style="margin-top: 5px; font-size: 8vw" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">{{currentWeather.city}}({{ currentWeather.country }})</h2>
+
+            <div>
+                <div style="border-right: 2px solid white" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <img style="width: 30vw;" ng-src="images/white-icons/{{currentWeather.icon}}.png" alt="weather">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                    <div style="margin-top: 3vw; font-size: 6vw; line-height: 1" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ currentWeather.description }}</div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <h1 style="margin-top: 5px; font-size: 15vw" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{ currentWeather.temperature }} {{ tempMeasureText }}</h1>
+            </div>
+
+        </div>
+
+        <!--bar with information !-->
+        <div style="height: 9vh; padding-left: 0px" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-bar-info">
+
+            <div style="padding-left: 10px" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 main-info-bar">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <img style="width: 8vw" src="images/pressure.png" alt="rain image">
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <p>{{ currentWeather.pressure }} mbar</p>
+                </div>
+            </div>
+
+            <div style="padding-right: 0px; padding-left: 40px" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 main-info-bar">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-right">
+                    <img style="width: 8vw" class="iconsInfo" src="images/humidity.png" alt="rain image">
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-left noPaddLeft">
+                    <p>{{ currentWeather.humidity }}</p>
+                </div>
+            </div>
+
+            <div style="padding-right: 0px" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 main-info-bar">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-right">
+                    <img style="width: 8vw" class="iconsInfo" src="images/wind.png" alt="rain image">
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-left noPaddLeft">
+                    <p>{{ currentWeather.windSpeed }} {{ speedMeasureMain }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="forecast" style="height: 35vh; padding: 0px" class="text-center col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <div class="mainForcastFive col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center" ng-repeat="forecastInfo in forecastInformation">
+                <div>
+                    <h5 class="text-center" style="font-size: 6vw; margin-bottom: 2vw; margin-top: 2vw">{{ forecastInfo.day}}</h5>
+                </div>
+                <div class="text-center">
+                    <img ng-src="images/black-icons/{{ forecastInfo.icon }}.png" class="forcast-Imgs" alt="weather">
+                </div>
+                <div class="text-center">
+                    <p class="top-degreeses">{{ forecastInfo.highTemp }}</p>
+                    <div class="crossed"></div>
+                    <p class="bottom-degreeses">{{ forecastInfo.lowTemp }}</p>
+                </div>
+            </div>
+
+            <div class="mainForcastFive col-lg-2 col-md-2 col-sm-2 col-xs-2">
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
